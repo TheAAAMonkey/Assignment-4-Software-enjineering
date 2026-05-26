@@ -2,6 +2,8 @@ import java.util.List;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.Character;
+import java.util.ArrayList;
 
 public class Driver {
     private final String driverID;
@@ -13,7 +15,8 @@ public class Driver {
     private boolean satisfired = true; 
     private boolean updateType = true;
     private String delimiter = "\t";
-
+    private String[] dataFinal;
+    private List<String> data;
     public Driver(String inputID, String inputName, int inputYears, String inputLicense, String inputAddress, String inputBirth, List<String> listIDs){
         if(inputYears > 10){
             updateType = false;
@@ -27,8 +30,32 @@ public class Driver {
         if(inputID.length() != 10){
             satisfired = false;
         }
+        //Checking if each character of this string fits all the equirements
+        int amount = 0;
+        for(int i = 0; i < 10; ++i){
+            if (i < 2){
+                if(Character.getNumericValue(inputID.charAt(i)) < 2){
+                    satisfired = false;
+                }
+            }
+            else if (i < 8){
+                if (!Character.isLetterOrDigit(inputID.charAt(i)) && !Character.isWhitespace(inputID.charAt(i))){
+                    amount = amount + 1;
+                }
+            }
+            else{  
+                if (amount < 2){
+                    satisfired = false;
+                }
+                
+                if(!Character.isUpperCase(inputID.charAt(i))){
+                    satisfired = false;
+                }
 
-        
+            }
+        }
+
+        //Final check to see if all is good. If not then Nothing is set
         if (satisfired == true){
             this.driverID = inputID;
             this.name = inputName;
@@ -36,13 +63,23 @@ public class Driver {
             licenseType = inputLicense;
             address = inputAddress;
             birthdate = inputBirth;    
-            String[] data = {this.driverID, this.name, str(experienceYears), licenseType, address, birthdate, updateType};
+            //dataFinal = (this.driverID, this.name, Integer.toString(experienceYears), licenseType, address, birthdate, String.valueOf(updateType));
+            data.add(this.driverID);
+            data.add(this.name);
+            data.add(Integer.toString(experienceYears));
+            data.add(licenseType);
+            data.add(address);
+            data.add(birthdate);
+            data.add(String.valueOf(updateType));
+            //dataFinal = data;
         }    
         else{
             this.driverID = null;
             this.name = null;
+            dataFinal = new String[0];
         }
     }
+
 
     public String getID(){
         return driverID;
@@ -50,6 +87,10 @@ public class Driver {
 
     public boolean getSatisfaction(){
         return satisfired;
+    }
+
+    public List<String> getAllData(){
+        return data;
     }
 }
 
