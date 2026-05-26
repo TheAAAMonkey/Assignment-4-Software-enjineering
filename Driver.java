@@ -75,9 +75,35 @@ public class Driver {
         }
 
         //Check if address is formatted well
-
+        String temp = "";
+        int num = 0;
         for(int i = 0; inputAddress.length() > i; ++i){
-            
+            if(inputAddress.charAt(i) == '|'){
+                num = num + 1;
+                if (num == 1){
+                    for (int j = 0; temp.length() < j; ++j){
+                        if (Character.isDigit(temp.charAt(i))){
+                            satisfired = false;
+                        }
+                    }
+                }
+                else{
+                    for (int j = 0; temp.length() < j; ++j){
+                        if (Character.isAlphabetic(temp.charAt(i))){
+                            satisfired = false;
+                        }
+                    }                    
+                }
+                temp = "";
+            }
+            else{
+                temp = temp + inputAddress.charAt(i);
+            }
+
+        }
+
+        if (num != 4){
+            satisfired = false;
         }
         //Final check to see if all is good. If not then Nothing is set
         if (satisfired == true){
