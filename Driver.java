@@ -16,8 +16,8 @@ public class Driver {
     private boolean updateType = true;
     private String delimiter = "\t";
     private String[] dataFinal;
-    private List<String> data;
-    public Driver(String inputID, String inputName, int inputYears, String inputLicense, String inputAddress, String inputBirth, List<String> listIDs){
+    private ArrayList<String> data;
+    public Driver(String inputID, String inputName, int inputYears, String inputLicense, String inputAddress, String inputBirth, ArrayList<String> listIDs){
         if(inputYears > 10){
             updateType = false;
         }
@@ -105,6 +105,7 @@ public class Driver {
         if (num != 4){
             satisfired = false;
         }
+
         //Final check to see if all is good. If not then Nothing is set
         if (satisfired == true){
             this.driverID = inputID;
