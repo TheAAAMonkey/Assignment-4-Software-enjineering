@@ -16,7 +16,8 @@ public class Driver {
     private boolean updateType = true;
     private String delimiter = "\t";
     private String[] dataFinal;
-    private ArrayList<String> data;
+    private ArrayList<String> data = new ArrayList<>();
+
     public Driver(String inputID, String inputName, int inputYears, String inputLicense, String inputAddress, String inputBirth, ArrayList<String> listIDs){
         if(inputYears > 10){
             updateType = false;
@@ -25,47 +26,62 @@ public class Driver {
         for(int i = 0; i < listIDs.size(); ++i)
             if (listIDs.get(i) == inputID){
                 satisfired = false;
+                System.out.println("ID is same as List");
             }
         
         if(inputID.length() != 10){
             satisfired = false;
+            System.out.println("ID Length is wrong");
         }
-        //Checking if each character of this string fits all the equirements
-        int amount = 0;
-        for(int i = 0; i < 10; ++i){
-            if (i < 2){
-                if(Character.getNumericValue(inputID.charAt(i)) < 2){
-                    satisfired = false;
-                }
-            }
-            else if (i < 8){
-                if (!Character.isLetterOrDigit(inputID.charAt(i)) && !Character.isWhitespace(inputID.charAt(i))){
-                    amount = amount + 1;
-                }
-            }
-            else{  
-                if (amount < 2){
-                    satisfired = false;
-                }
-                
-                if(!Character.isUpperCase(inputID.charAt(i))){
-                    satisfired = false;
-                }
 
+        //Checking if each character of this string fits all the equirements
+        else{
+            int amount = 0;
+            for(int i = 0; i < 10; ++i){
+                if (i < 2){
+                    if(Character.getNumericValue(inputID.charAt(i)) < 2){
+                        satisfired = false;
+                        System.out.println("Apple");
+                    }
+
+                    if(!Character.isDigit(inputID.charAt(i))){
+                        satisfired = false;
+                    }
+                }
+                else if (i < 8){
+                    if (!Character.isLetterOrDigit(inputID.charAt(i)) && !Character.isWhitespace(inputID.charAt(i))){
+                        amount = amount + 1;
+                    }
+                }
+                else{  
+                    if (amount < 2){
+                        satisfired = false;
+                        System.out.println("Apple");
+                    }
+                
+                    if(!Character.isUpperCase(inputID.charAt(i))){
+                        satisfired = false;
+                        System.out.println("Apple");
+                    }
+
+                }
             }
-        }
+        }  
 
         //Check if birthdate is working well
         if(inputBirth.length() == 10){
             for(int i = 0; i < 10; ++i){
-                if(i != 2 || i != 5){
+                if(!(i == 2 || i == 5)){
                     if (!Character.isDigit(inputBirth.charAt(i))){
+                        System.out.println(inputBirth.charAt(i));
                         satisfired = false;
+                        //System.out.println("Apple");
                     }
                 }
                 else{
                     if (inputBirth.charAt(i) != '-'){
                         satisfired = false;
+                        System.out.println("Apple");
                     }
                 }
             }
@@ -73,6 +89,7 @@ public class Driver {
         else{
             satisfired = false;
         }
+    
 
         //Check if address is formatted well
         String temp = "";
@@ -80,16 +97,19 @@ public class Driver {
         for(int i = 0; inputAddress.length() > i; ++i){
             if(inputAddress.charAt(i) == '|'){
                 num = num + 1;
+                //System.out.println(temp);
                 if (num == 1){
                     for (int j = 0; temp.length() < j; ++j){
-                        if (Character.isDigit(temp.charAt(i))){
+                        if (!Character.isDigit(temp.charAt(i))){
                             satisfired = false;
+                            System.out.println("Apple");
                         }
                     }
                 }
+
                 else{
                     for (int j = 0; temp.length() < j; ++j){
-                        if (Character.isAlphabetic(temp.charAt(i))){
+                        if (!Character.isAlphabetic(temp.charAt(i))){
                             satisfired = false;
                         }
                     }                    
@@ -113,7 +133,8 @@ public class Driver {
             experienceYears = inputYears;
             licenseType = inputLicense;
             address = inputAddress;
-            birthdate = inputBirth;    
+            birthdate = inputBirth;   
+            //System.out.println(birthdate); 
 
             //dataFinal = (this.driverID, this.name, Integer.toString(experienceYears), licenseType, address, birthdate, String.valueOf(updateType));
             data.add(this.driverID);
@@ -128,7 +149,6 @@ public class Driver {
         else{
             this.driverID = null;
             this.name = null;
-            dataFinal = new String[0];
         }
     }
 
