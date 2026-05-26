@@ -55,6 +55,30 @@ public class Driver {
             }
         }
 
+        //Check if birthdate is working well
+        if(inputBirth.length() == 10){
+            for(int i = 0; i < 10; ++i){
+                if(i != 2 || i != 5){
+                    if (!Character.isDigit(inputBirth.charAt(i))){
+                        satisfired = false;
+                    }
+                }
+                else{
+                    if (inputBirth.charAt(i) != '-'){
+                        satisfired = false;
+                    }
+                }
+            }
+        }
+        else{
+            satisfired = false;
+        }
+
+        //Check if address is formatted well
+
+        for(int i = 0; inputAddress.length() > i; ++i){
+            
+        }
         //Final check to see if all is good. If not then Nothing is set
         if (satisfired == true){
             this.driverID = inputID;
@@ -63,6 +87,7 @@ public class Driver {
             licenseType = inputLicense;
             address = inputAddress;
             birthdate = inputBirth;    
+
             //dataFinal = (this.driverID, this.name, Integer.toString(experienceYears), licenseType, address, birthdate, String.valueOf(updateType));
             data.add(this.driverID);
             data.add(this.name);
