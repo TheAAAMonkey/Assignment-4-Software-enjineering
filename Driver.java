@@ -19,7 +19,7 @@ public class Driver {
     private ArrayList<String> data = new ArrayList<>();
 
     public Driver(String inputID, String inputName, int inputYears, String inputLicense, String inputAddress, String inputBirth, ArrayList<String> listIDs){
-        if(inputYears > 10){
+        if(inputYears <= 10){
             updateType = false;
         }
 
@@ -89,6 +89,11 @@ public class Driver {
         else{
             satisfired = false;
         }
+
+        //System.out.println(inputBirth.substring(3, 5));
+        if(Integer.parseInt(inputBirth.substring(3, 5)) > 12){
+            satisfired = false;
+        }
     
 
         //Check if address is formatted well
@@ -97,19 +102,21 @@ public class Driver {
         for(int i = 0; inputAddress.length() > i; ++i){
             if(inputAddress.charAt(i) == '|'){
                 num = num + 1;
-                //System.out.println(temp);
-                if (num == 1){
-                    for (int j = 0; temp.length() < j; ++j){
-                        if (!Character.isDigit(temp.charAt(i))){
+                //System.out.println(num);
+                if (num < 2){
+                    //System.out.println(temp);
+                    for (int j = 0; temp.length() > j; ++j){
+                        //System.out.println(temp);
+                        if (!Character.isDigit(temp.charAt(j))){
                             satisfired = false;
-                            System.out.println("Apple");
+                            //System.out.println("Apple");
                         }
                     }
                 }
 
                 else{
-                    for (int j = 0; temp.length() < j; ++j){
-                        if (!Character.isAlphabetic(temp.charAt(i))){
+                    for (int j = 0; temp.length() > j; ++j){
+                        if (!Character.isAlphabetic(temp.charAt(j))){
                             satisfired = false;
                         }
                     }                    
@@ -117,6 +124,7 @@ public class Driver {
                 temp = "";
             }
             else{
+                //System.out.println(temp);
                 temp = temp + inputAddress.charAt(i);
             }
 
@@ -124,6 +132,12 @@ public class Driver {
 
         if (num != 4){
             satisfired = false;
+        }
+
+        for(int i = 0; i < inputName.length(); ++i){
+            if(Character.isDigit(inputName.charAt(i))){
+                satisfired = false;
+            }
         }
 
         //Final check to see if all is good. If not then Nothing is set
@@ -163,6 +177,30 @@ public class Driver {
 
     public List<String> getAllData(){
         return data;
+    }
+
+    public String getBirthday(){
+        return birthdate;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getExperienceyears(){
+        return Integer.toString(experienceYears);
+    }
+
+    public String getLicenseType(){
+        return licenseType;
+    }
+
+    public String getAddress(){
+        return address;
+    }
+
+    public String getLicenseUpdateLevel(){
+        return String.valueOf(updateType);
     }
 }
 

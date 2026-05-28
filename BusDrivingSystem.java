@@ -5,7 +5,7 @@ public class BusDrivingSystem {
         ArrayList<String> list = new ArrayList<>();
 
         list.add("343^5#78BS");
-        Driver driver = new Driver("4445!T^8RR", "Apple", 12, "Mad", "ap|Apple|Apple|aooke|apple", "12-11-1220", list);
+        Driver driver = new Driver("4445!T^8RR", "Apple", 11, "Mad", "12|Apple|Apple|aooke|apple", "12-11-1220", list);
         //Bus bus = new Bus();
         BusRepository busData = new BusRepository();
         DriverRepository driverData = new DriverRepository();
