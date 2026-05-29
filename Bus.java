@@ -24,7 +24,7 @@ this.fuelType = fuelType;
 }else{
     this.busID = null;
 }
-
+}
 //B1 IDs must be unique, 8 char long, no digits
 private boolean validateBusID(String busID, List<String> existingIDs){
 // check length ; ID must be exactly 8 characters long
@@ -46,13 +46,67 @@ for (String id : existingIDs) {
 
 }
 }
-
+return true;
+}
 
 //B2 capacity cannot increase during update operations, but can decrease
+public boolean updateCapacity(int newCapacity){
+    if (newCapacity > this.capacity){
+        return false;
+    }else{
+    this.capacity = newCapacity;
+    }
+    return true;
+}
+//b3,4,5
+public boolean canDriverOperator(Driver driver){
 //B3 drivers older than 50 cannot drive bues with a capacity of 50 or more
+if (getDriverAge(driver.getBirthday()) > 50 && this.capacity >= 50){
+    return false;
+}
 //B4 only drivers with >= 5 years of experience can drive electric buses
+if (this.fuelType.equals("Electricity") && (driver.getExperienceyears() < 5)){
+    return false;
+}
 //B5 only drivers with heavy or public transport licences are able to operate electric or hybrid buses
+if (this.fuelType.equals("Electricity") || this.fuelType.equals("Hybrid")){
+    String licence = driver.getLicenseType();
+    if (!licence.equals("Heavy") && !licence.equals("PublicTransport")){
+        return false;
+    }
+}
 
+return true;
 }
+
+// helper: calculate age from birthdate DD-MM-YYYY
+private int getDriverAge(String birthdate) {
+    // get birth year from last 4 characters of DD-MM-YYYY
+    int birthYear = Integer.parseInt(birthdate.substring(6, 10));
+    
+    // get current year
+    int currentYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
+    
+    // calculate age
+    return currentYear - birthYear;
 }
+
+ // getters
+public String getBusID() { 
+    return busID; 
+    }
+public int getCapacity() {
+    return capacity; 
+    }
+public double getFuelLevel() {
+    return fuelLevel; 
+    }
+public String getFuelType() {
+    return fuelType; 
+    }
+public boolean getSatisfied() {
+    return satisfied; 
+    }
 }
+
+
