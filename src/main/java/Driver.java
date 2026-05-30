@@ -203,5 +203,9 @@ public class Driver {
     public boolean getLicenseUpdateLevel(){
         return updateType;
     }
+
+    public void setID(String inputID){
+        driverID = inputID;
+    }
 }
 

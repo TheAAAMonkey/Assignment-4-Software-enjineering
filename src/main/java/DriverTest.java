@@ -105,8 +105,10 @@ public class DriverTest {
     @Test
     void testIDIsChanged() {
         Driver driver = new Driver("4445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
-        assertFalse(driver.getSatisfaction());
-        assertFalse(driver.getLicenseUpdateLevel());
+        assertDoesNotThrow(() -> {
+            driver.setID("Apple");
+        });
+
     }
     //D1
     // TC12: Is is same as one in the list

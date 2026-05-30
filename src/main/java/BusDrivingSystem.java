@@ -13,10 +13,6 @@ public class BusDrivingSystem {
 
         //System.out.println(driver.getAllData());
         //System.out.println(driver.getSatisfaction());
-        DriverTest test = new DriverTest();
-
-        test.setUp();
-        test.testDriverUnder50LargeBus();
     }
     
 }
