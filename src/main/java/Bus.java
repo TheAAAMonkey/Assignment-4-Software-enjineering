@@ -1,3 +1,4 @@
+package src.main.java;
 import java.util.List;
 public class Bus{
     private String busID;
