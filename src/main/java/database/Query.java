@@ -1,3 +1,5 @@
+package database;
+
 import java.util.ArrayList;
 public class Query {
     // Method to turn sql query into list of databse functions to execute
