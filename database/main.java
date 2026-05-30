@@ -9,8 +9,8 @@ public class main {
 
         String[] headers = new String[]{"id", "name", "age"};
 
-        db.create("mydatabase.csv", headers);
-        db.open("mydatabase.csv");
+        db.create("mydatabase.txt", headers);
+        db.open("mydatabase.txt");
 
         // System.out.println("Testing efiun iulwesn fliuweifln");
 
