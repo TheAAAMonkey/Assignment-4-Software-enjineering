@@ -1,0 +1,6 @@
+busID,capacity,fuelLevel,fuelType
+00000001,100,0.0,Diesel
+00000002,80,0.0,Diesel
+00000003,60,0.0,Diesel
+00000004,46,0.0,Unleaded
+00000005,30,0.0,Unleaded

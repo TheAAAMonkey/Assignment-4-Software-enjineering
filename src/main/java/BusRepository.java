@@ -137,6 +137,12 @@ public class BusRepository {
         bus_dp.clear();
     }
 
+    public String[] getBusIds() {
+        int[] select = {bus_dp.getColumnIndex("busID")};
+        DataTable results = bus_dp.select(select);
+        return results.getColumn(0);
+    }
+
     // Method to check bus is valid
     public boolean isBusValid(Bus bus) {
         // Check if ID is valid

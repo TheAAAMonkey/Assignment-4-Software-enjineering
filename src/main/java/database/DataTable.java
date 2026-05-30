@@ -11,13 +11,13 @@ public class DataTable {
     public DataTable(String[] headers) {
         this.headers = headers;
         this.data = new ArrayList<String[]>();
-        System.out.println("pass: DataTable created with " + headers.length + " columns.");
+        // System.out.println("pass: DataTable created with " + headers.length + " columns.");
     }
 
     public DataTable(String[] headers, ArrayList<String[]> data ) {
         this.data = data;
         this.headers = headers;
-        System.out.println("pass: DataTable created with " + data.size() + " records and " + headers.length + " columns.");
+        // System.out.println("pass: DataTable created with " + data.size() + " records and " + headers.length + " columns.");
     }
 
     // methods to get data and headers
