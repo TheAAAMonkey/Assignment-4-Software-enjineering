@@ -60,11 +60,14 @@ public boolean updateCapacity(int newCapacity){
     return true;
 }
 //b3,4,5
-public boolean canDriverOperator(Driver driver){
-//B3 drivers older than 50 cannot drive bues with a capacity of 50 or more
-if (getDriverAge(driver.getBirthday()) > 50 && this.capacity >= 50){
-    return false;
-}
+public boolean canDriverOperate(Driver driver) {
+    // B3: drivers older than 50 cannot drive buses with capacity 50+
+    String birthdate = driver.getBirthday();
+    if (birthdate != null) {
+        if (getDriverAge(birthdate) > 50 && this.capacity >= 50) {
+            return false;
+        }
+    }
 //B4 only drivers with >= 5 years of experience can drive electric buses
 if (this.fuelType.equals("Electricity") && (driver.getExperienceyears() < 5)){
     return false;
