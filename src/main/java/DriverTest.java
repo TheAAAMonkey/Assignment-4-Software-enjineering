@@ -16,7 +16,7 @@ public class DriverTest {
     // TC1: Valid All Inputs. Thus tests all inputs
     @Test
     void testValidDriverAllk() {
-        Driver driver = new Driver("445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        Driver driver = new Driver("4445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
         assertTrue(driver.getSatisfaction());
         assertFalse(driver.getLicenseUpdateLevel());
     }
@@ -95,7 +95,7 @@ public class DriverTest {
     // TC10: name is a number
     @Test
     void testDriverNameIsNumber() {
-        Driver driver = new Driver("4445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        Driver driver = new Driver("4445!T^8RR", "12345", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
         assertFalse(driver.getSatisfaction());
         assertFalse(driver.getLicenseUpdateLevel());
     }
