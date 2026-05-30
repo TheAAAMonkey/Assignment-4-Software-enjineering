@@ -89,6 +89,18 @@ public class DatabaseTest {
         result.print();
         System.out.println();
 
+        // Testing dp part 4: Edit a record
+        System.out.println("Edit Where name=Bob age from 30 to 90");
+        where = new String[]{"--", "==Bob", "--"};
+        result = db.select(where);
+        String[] newRecord = result.getRecord(0);
+        newRecord[result.getColumnIndex("age")] = "90";
+        db.edit(where, newRecord);
+
+        result = db.select();
+        result.print();
+        System.out.println();
+
 
     }
 }

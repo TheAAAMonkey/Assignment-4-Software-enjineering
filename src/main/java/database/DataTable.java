@@ -43,6 +43,16 @@ public class DataTable {
         return data.get(index);
     }
 
+    // Method to remove record from the TABLE ONLY for for loops complexity optimisation
+    public void removeRecord(int index) {
+        data.remove(index);
+    }
+
+    // Methdo to check if empty
+    public boolean isEmpty() {
+        return data.isEmpty();
+    }
+
     // Method to get a column index by name
     public int getColumnIndex(String columnName) {
         for (int i = 0; i < headers.length; i++) {

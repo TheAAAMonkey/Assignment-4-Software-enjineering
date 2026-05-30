@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;                  // Import the File class
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.Scanner;
 
 public class Database {
@@ -121,7 +123,7 @@ public class Database {
     // Insert method
     public void insert(String[] values) {
         // Implementation for inserting a new record into the database file
-        try (FileWriter writer = new FileWriter(this.dbfile, true)) {
+        try (FileWriter writer = new FileWriter(this.dbfile, true);) {
             String recordLine = String.join(",", values);
             writer.write("\n" + recordLine); // Write new record to the file
             log("pass: New record inserted: " + recordLine);
@@ -351,13 +353,48 @@ public class Database {
         return matches;
     }
 
-    // edit records where
+    // edit records in place where
     public void edit(String[] where, String[] newRecord) {
         // check both String[] are same length as headers
         if (where.length != headers.length || newRecord.length != headers.length ) {
             System.out.println("error: Invalid inpput for edit record. Arrays must have the same number of elements as there are headers for the database.");
-        } else {
-            select
+        }
+
+        // There's unfortunatly no way in java I could find to overwrite a specific line in a file, so this method is hard hitting on the RAM
+        DataTable whereResults = this.select(where);
+        
+        // Check there are any results at all
+        if (whereResults.isEmpty()) {
+            System.out.println("error: Where clause returned no results.");
+            return;
+        }
+
+        try {
+            // Get all lines
+            List<String> lines = Files.readAllLines(dbfile.toPath()); 
+
+            // Iterate through lines
+            for (int i = 1 ; i < lines.size() ; i++) {
+                // Iterate through where results
+                for (int j = 0 ; j < whereResults.getRecordCount() ; j++) {
+                    // Get where result as a string
+                    String checkRecord = String.join(",", whereResults.getRecord(j));
+                    // if line amtches where result then:
+                    if (lines.get(i).equals(checkRecord)) {
+                        // Set line ot new record
+                        lines.set(i, String.join(",", newRecord));
+                        whereResults.removeRecord(j);
+                    }
+                }
+            }
+
+            // Write new lines to file
+            Files.write(dbfile.toPath(), lines);
+
+
+
+        } catch (Exception e) {
+            System.out.println("error: Failed to read file");
         }
 
     }
