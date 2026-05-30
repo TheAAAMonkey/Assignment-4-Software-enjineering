@@ -16,138 +16,133 @@ public class DriverTest {
         existingIDs.add("343^5#78BS");
     }
 
-    //B1
+    //D1 D2 D3 D4 D5
     // TC1: Valid busID
     @Test
     void testValidDriverID() {
-        Driver driver = new Driver("445!T^8RR", "Apple", 2, "Mad", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        Driver driver = new Driver("445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
         assertTrue(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
 
-    // TC2: busID too short
+    //D1
+    // TC2: first Integer is below 2
     @Test
     void testDriverIDTooShort() {
-        Driver driver = new Driver("1234567", 50, 80.0, "Diesel", emptyList);
+        Driver driver = new Driver("1445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
         assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
 
-    // TC3: busID contains letter
+    //D1
+    // TC3: DriverID has 1 special character
     @Test
     void testFirstDriverIDIsBelow2() {
-        Driver driver = new Driver("1234567A", 50, 80.0, "Diesel", emptyList);
+        Driver driver = new Driver("4445!T58RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
         assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
-
-    // TC4: duplicate busID
+    //D2
+    // TC4: Invalid case of a single number
     @Test
     void testDuplicateBusID() {
-        Driver driver = new Driver("12345678", 50, 80.0, "Diesel", existingIDs);
+        Driver driver = new Driver("4445!T^8RR", "Apple", 2, "Light", "12", "12-11-1220", existingIDs);
         assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
-// B2
 
-    // TC5: decrease capacity - allowed
+    //D2
+    // TC5: street number is a word
     @Test
     void testDecreaseCapacity() {
-        Driver driver = new Driver("12345678", 50, 80.0, "Diesel", emptyList);
-        assertTrue(driver.updateCapacity(30));
+        Driver driver = new Driver("4445!T^8RR", "Apple", 2, "Light", "Apple|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
 
-    // TC6: increase capacity - not allowed
+    //D3
+    // TC6: birthday format uses / instead of -
     @Test
     void testIncreaseCapacity() {
-        Driver driver = new Driver("12345678", 50, 80.0, "Diesel", emptyList);
-        assertFalse(driver.updateCapacity(60));
+        Driver driver = new Driver("4445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12/11/1220", existingIDs);
+        assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
 
-    // TC7: same capacity - allowed
+    //D3
+    // TC7: month amount is over 12
     @Test
     void testSameCapacity() {
-        Driver driver = new Driver("12345678", 50, 80.0, "Diesel", emptyList);
-        assertTrue(driver.updateCapacity(50));
+        Driver driver = new Driver("4445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-13-1220", existingIDs);
+        assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
 
-    //B3
-    // TC8: driver under 50, large driver - allowed
+    //D4
+    // TC8: Years of experience is at 10
     @Test
     void testDriverUnder50LargeBus() {
-        Driver driver = new Driver("12345678", 50, 80.0, "Diesel", emptyList);
-        Driver driver = new Driver("23@@5678AB", "John Smith", 10, "Heavy",
-            "12|MainSt|Melbourne|VIC|Australia", "01-01-1985", emptyList);
-        assertTrue(driver.canDriverOperate(driver));
+        Driver driver = new Driver("4445!T^8RR", "Apple", 10, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        assertTrue(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
 
-    // TC9: driver over 50, large driver - not allowed
+    //D4
+    // TC9: Years of experience is at 11
     @Test
     void testDriverOver50LargeBus() {
-        Driver driver = new Driver("12345678", 50, 80.0, "Diesel", emptyList);
-        Driver driver = new Driver("23@@5678AB", "John Smith", 10, "Heavy",
-            "12|MainSt|Melbourne|VIC|Australia", "01-01-1970", emptyList);
-        assertFalse(driver.canDriverOperate(driver));
+        Driver driver = new Driver("4445!T^8RR", "Apple", 11, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        assertTrue(driver.getSatisfaction());
+        assertTrue(driver.getLicenseUpdateLevel());
     }
-
-    // TC10: driver over 50, small driver - allowed
+    //D5
+    // TC10: name is a number
     @Test
     void testDriverOver50SmallBus() {
-        Driver driver = new Driver("12345678", 30, 80.0, "Diesel", emptyList);
-        Driver driver = new Driver("23@@5678AB", "John Smith", 10, "Heavy",
-            "12|MainSt|Melbourne|VIC|Australia", "01-01-1970", emptyList);
-        assertTrue(driver.canDriverOperate(driver));
+        Driver driver = new Driver("4445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
 
-   //B4
-    // TC11: 5+ years experience, electric driver - allowed
+    //D5
+    // TC11: Id tries to be changed
     @Test
     void testSufficientExperienceElectric() {
-        Driver driver = new Driver("12345678", 30, 80.0, "Electricity", emptyList);
-        Driver driver = new Driver("23@@5678AB", "John Smith", 5, "Heavy",
-            "12|MainSt|Melbourne|VIC|Australia", "01-01-1990", emptyList);
-        assertTrue(driver.canDriverOperate(driver));
+        Driver driver = new Driver("4445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
-
-    // TC12: under 5 years experience, electric driver - not allowed
+    //D1
+    // TC12: Is is same as one in the list
     @Test
     void testInsufficientExperienceElectric() {
-        Driver driver = new Driver("12345678", 30, 80.0, "Electricity", emptyList);
-        Driver driver = new Driver("23@@5678AB", "John Smith", 3, "Heavy",
-            "12|MainSt|Melbourne|VIC|Australia", "01-01-1990", emptyList);
-        assertFalse(driver.canDriverOperate(driver));
+        Driver driver = new Driver("343^5#78BS ", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
-
-    // TC13: under 5 years experience, diesel driver - allowed
+    //D1
+    // TC13: Id is 11 charcters long
     @Test
     void testInsufficientExperienceDiesel() {
-        Driver driver = new Driver("12345678", 30, 80.0, "Diesel", emptyList);
-        Driver driver = new Driver("23@@5678AB", "John Smith", 3, "Heavy",
-            "12|MainSt|Melbourne|VIC|Australia", "01-01-1990", emptyList);
-        assertTrue(driver.canDriverOperate(driver));
+        Driver driver = new Driver("4445!T^8RRR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
 
-    //B5
-    // TC14: Heavy licence, electric driver - allowed
+    //D1
+    // TC14: ID is 9 charcters long which isnt long enough
     @Test
     void testHeavyLicenceElectric() {
-        Driver driver = new Driver("12345678", 30, 80.0, "Electricity", emptyList);
-        Driver driver = new Driver("23@@5678AB", "John Smith", 5, "Heavy",
-            "12|MainSt|Melbourne|VIC|Australia", "01-01-1990", emptyList);
-        assertTrue(driver.canDriverOperate(driver));
+        Driver driver = new Driver("445!T^8RR", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
-
-    // TC15: Light licence, hybrid driver - not allowed
+    //D1
+    // TC15: last charcater is lower case
     @Test
     void testLightLicenceHybrid() {
-        Driver driver = new Driver("12345678", 30, 80.0, "Hybrid", emptyList);
-        Driver driver = new Driver("23@@5678AB", "John Smith", 5, "Light",
-            "12|MainSt|Melbourne|VIC|Australia", "01-01-1990", emptyList);
-        assertFalse(driver.canDriverOperate(driver));
-    }
-
-    // TC16: PublicTransport licence, hybrid driver - allowed
-    @Test
-    void testPublicTransportLicenceHybrid() {
-        Driver driver = new Driver("12345678", 30, 80.0, "Hybrid", emptyList);
-        Driver driver = new Driver("23@@5678AB", "John Smith", 5, "PublicTransport",
-            "12|MainSt|Melbourne|VIC|Australia", "01-01-1990", emptyList);
-        assertTrue(driver.canDriverOperate(driver));
+        Driver driver = new Driver("4445!T^8Rr", "Apple", 2, "Light", "12|Apple|Apple|aooke|apple", "12-11-1220", existingIDs);
+        assertFalse(driver.getSatisfaction());
+        assertFalse(driver.getLicenseUpdateLevel());
     }
 }

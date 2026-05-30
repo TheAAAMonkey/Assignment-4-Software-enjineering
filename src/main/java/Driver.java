@@ -200,8 +200,8 @@ public class Driver {
         return address;
     }
 
-    public String getLicenseUpdateLevel(){
-        return String.valueOf(updateType);
+    public boolean getLicenseUpdateLevel(){
+        return updateType;
     }
 }
 
