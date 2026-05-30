@@ -1,3 +1,5 @@
+package database;
+
 import java.io.File;
 import java.io.FileNotFoundException;                  // Import the File class
 import java.io.FileWriter;
@@ -173,42 +175,8 @@ public class Database {
                 }
 
                 // Check the condition based on the operator
-                switch (operator) {
-                    case "==" -> {
-                        if (!recordValues[i].equals(value)) {
-                            matches = false;
-                        }
-                    }
-                    case ">>" -> {
-                        if (Integer.parseInt(recordValues[i]) <= Integer.parseInt(value)) {
-                            matches = false;
-                        }
-                    }
-                    case "<<" -> {
-                        if (Integer.parseInt(recordValues[i]) >= Integer.parseInt(value)) {
-                            matches = false;
-                        }
-                    }
-                    case "!=" -> {
-                        if (recordValues[i].equals(value)) {
-                            matches = false;
-                        }
-                    }
-                    case ">=" -> {
-                        if (Integer.parseInt(recordValues[i]) < Integer.parseInt(value)) {
-                            matches = false;
-                        }
-                    }
-                    case "<=" -> {
-                        if (Integer.parseInt(recordValues[i]) > Integer.parseInt(value)) {
-                            matches = false;
-                        }
-                    }
-                    default -> {
-                        System.out.println("error: Unknown operator in where clause.");
-                        matches = false;
-                    }
-                }
+                matches = checkCondition(operator, recordValues[i], value);
+
             }
 
             // If matches is still true after checking all conditions, 
@@ -270,42 +238,7 @@ public class Database {
                 }
 
                 // Check the condition based on the operator
-                switch (operator) {
-                    case "==" -> {
-                        if (!recordValues[i].equals(value)) {
-                            matches = false;
-                        }
-                    }
-                    case ">>" -> {
-                        if (Integer.parseInt(recordValues[i]) <= Integer.parseInt(value)) {
-                            matches = false;
-                        }
-                    }
-                    case "<<" -> {
-                        if (Integer.parseInt(recordValues[i]) >= Integer.parseInt(value)) {
-                            matches = false;
-                        }
-                    }
-                    case "!=" -> {
-                        if (recordValues[i].equals(value)) {
-                            matches = false;
-                        }
-                    }
-                    case ">=" -> {
-                        if (Integer.parseInt(recordValues[i]) < Integer.parseInt(value)) {
-                            matches = false;
-                        }
-                    }
-                    case "<=" -> {
-                        if (Integer.parseInt(recordValues[i]) > Integer.parseInt(value)) {
-                            matches = false;
-                        }
-                    }
-                    default -> {
-                        System.out.println("error: Unknown operator in where clause.");
-                        matches = false;
-                    }
-                }
+                matches = checkCondition(operator, recordValues[i], value);
             }
 
             // If matches is still true after checking all conditions, 
@@ -372,6 +305,61 @@ public class Database {
             selectedRecords.addRecord(recordValues);
         }
         return selectedRecords;
+    }
+
+    // Extracted segment of where clause to make code more consise
+    private static boolean checkCondition(String operator, String recordValue, String compareValue) {
+        boolean matches = true;
+
+        switch (operator) {
+            case "==" -> {
+                if (!recordValue.equals(compareValue)) {
+                    matches = false;
+                }
+            }
+            case ">>" -> {
+                if (Integer.parseInt(recordValue) <= Integer.parseInt(compareValue)) {
+                    matches = false;
+                }
+            }
+            case "<<" -> {
+                if (Integer.parseInt(recordValue) >= Integer.parseInt(compareValue)) {
+                    matches = false;
+                }
+            }
+            case "!=" -> {
+                if (recordValue.equals(compareValue)) {
+                    matches = false;
+                }
+            }
+            case ">=" -> {
+                if (Integer.parseInt(recordValue) < Integer.parseInt(compareValue)) {
+                    matches = false;
+                }
+            }
+            case "<=" -> {
+                if (Integer.parseInt(recordValue) > Integer.parseInt(compareValue)) {
+                    matches = false;
+                }
+            }
+            default -> {
+                System.out.println("error: Unknown operator in where clause.");
+                matches = false;
+            }
+        }
+
+        return matches;
+    }
+
+    // edit records where
+    public void edit(String[] where, String[] newRecord) {
+        // check both String[] are same length as headers
+        if (where.length != headers.length || newRecord.length != headers.length ) {
+            System.out.println("error: Invalid inpput for edit record. Arrays must have the same number of elements as there are headers for the database.");
+        } else {
+            select
+        }
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////

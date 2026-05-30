@@ -1,6 +1,6 @@
-package "database";
+package database;
 
-public class main {
+public class DatabaseTest {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
 
