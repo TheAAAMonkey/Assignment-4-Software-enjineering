@@ -431,6 +431,23 @@ public class Database {
         return open;
     }
 
+    public int getRecords() {
+        return records;
+    }
+
+    // Method to get a column index by name
+    public int getColumnIndex(String columnName) {
+        for (int i = 0; i < headers.length; i++) {
+            if (headers[i].equals(columnName)) {
+                return i;
+            }
+        }
+
+        // if not found, return -1 and print error
+        System.out.println("error: Column name not found: " + columnName);
+        return -1;
+    }
+
 
 
 
