@@ -66,7 +66,7 @@ public class Query {
         int[] newSelect = new int[select.size()];
 
         for (int i = 0 ; i < select.size() ; i++ ) {
-            newSelect[i] = select.get(i)
+            newSelect[i] = select.get(i);
         }
 
         // return int[]

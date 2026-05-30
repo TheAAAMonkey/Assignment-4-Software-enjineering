@@ -7,7 +7,7 @@ import java.lang.Character;
 import java.util.ArrayList;
 
 public class Driver {
-    private final String driverID;
+    private String driverID;
     private final String name;
     private int experienceYears;
     private String licenseType; // Light, Medium, Heavy, PublicTransport
