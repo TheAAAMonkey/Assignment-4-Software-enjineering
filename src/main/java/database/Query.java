@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 public class Query {
     // Method to turn sql query into list of databse functions to execute
     public static DataTable query(Database db, String query) {
