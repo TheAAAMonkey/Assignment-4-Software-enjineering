@@ -2,7 +2,7 @@ import database.DataTable;
 import database.Database;
 
 public class BusRepository {
-    final String filename = "Bus_Repository.txt";
+    String filename = "Bus_Repository.txt";
     final String[] headers = {"busID", "capacity", "fuelLevel", "fuelType"};
     Database bus_dp;
 
@@ -16,10 +16,31 @@ public class BusRepository {
         bus_dp.open(filename);
     }
 
+    // Sepacial Constructor for Bus Repository class for test database
+    public BusRepository(String filename) {
+        // Change normal filename
+        this.filename = filename;
+        // Initialise bus database
+        bus_dp = new Database();
+        // Create the file if it is not already created
+        bus_dp.create(filename, headers);
+        // Open database
+        bus_dp.open(filename);
+    }
+
     // Method to add bus to database
     public void addBus(Bus bus) {
-        // convert bus to record format of String[] and
-        // insert bus into db
+        // Check if ID already exists
+        if (checkBusExists(bus.getBusID())) {
+            System.out.println("error: Cannot add bus because a bus with that ID already exists. Try editing instead.");
+            return;
+        }
+        // Check Bus is valid
+        if (!isBusValid(bus)) {
+            return;
+        }
+
+        // convert bus to record format of String[] and insert bus into db
         this.bus_dp.insert(busToRecord(bus));
     }
 
@@ -57,6 +78,11 @@ public class BusRepository {
             return;
         }
 
+        if (!isBusValid(newbus)) {
+            System.out.println("error: Bus to replace old is invalid.");
+            return;
+        }
+
         // Make where argument
         String[] where = {("==" + replaceBusID), "--", "--", "--"};
 
@@ -68,6 +94,10 @@ public class BusRepository {
     }
 
     public int countBuses() {
+        return bus_dp.getRecords();
+    }
+
+    public int getNumBuses() {
         return bus_dp.getRecords();
     }
 
@@ -100,6 +130,34 @@ public class BusRepository {
         // Check if any results
         // otherwise return false
         return results.getRecordCount() > 0;
+    }
+
+    // Method to clear/delete database for testing
+    public void io7834vytui453v7nyu4yw5b() {
+        bus_dp.clear();
+    }
+
+    // Method to check bus is valid
+    public boolean isBusValid(Bus bus) {
+        // Check if ID is valid
+        if (!Bus.isValid(bus.getBusID())) {
+            System.out.println("error: Bus ID is invalid.");
+            return false;
+        }
+        // Check int and double are not less than 0
+        if ((bus.getCapacity() < 0) || (bus.getFuelLevel() < 0.0)) {
+            System.out.println("error: Bus Capacity or Fuel level is below 0.");
+            return false;
+        }
+        // Check if any applicable fields are null
+        if (
+            (bus.getFuelType().equals(null)) ||
+            (bus.getFuelType().equals(""))
+        ) {
+            System.out.println("error: A value in bus is null.");
+            return false;
+        }
+        return true;
     }
 
     ///////////////////////////////////////////////////////////

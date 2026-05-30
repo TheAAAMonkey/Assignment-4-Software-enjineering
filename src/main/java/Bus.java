@@ -36,26 +36,26 @@ public Bus(String busID, int capacity, double fuelLevel, String fuelType){
 
 //B1 IDs must be unique, 8 char long, no digits
 private boolean validateBusID(String busID, List<String> existingIDs){
-// check length ; ID must be exactly 8 characters long
-if(busID.length() != 8){
-    return false;
-}
-
-//checking characters; all must be digits
-for (char c : busID.toCharArray()){
-    if (Character.isDigit(c) == false){
+    // check length ; ID must be exactly 8 characters long
+    if(busID.length() != 8){
         return false;
     }
-}
 
-//checking its unique
-for (String id : existingIDs) {
-    if (id.equals(busID)) {
-        return false;
+    //checking characters; all must be digits
+    for (char c : busID.toCharArray()){
+        if (Character.isDigit(c) == false){
+            return false;
+        }
+    }
 
-}
-}
-return true;
+    //checking its unique
+    for (String id : existingIDs) {
+        if (id.equals(busID)) {
+            return false;
+
+    }
+    }
+    return true;
 }
 
 //B2 capacity cannot increase during update operations, but can decrease
@@ -118,6 +118,24 @@ public String getFuelType() {
     }
 public boolean getSatisfied() {
     return satisfied; 
+    }
+
+    // Method to check busId is valid except for duplicates
+    public static boolean isValid(String busID) {
+        
+        // check length ; ID must be exactly 8 characters long
+        if(busID.length() != 8){
+            return false;
+        }
+
+        //checking characters; all must be digits
+        for (char c : busID.toCharArray()){
+            if (Character.isDigit(c) == false){
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
